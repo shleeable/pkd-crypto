@@ -29,6 +29,7 @@ class EncryptedUndoFireproof implements EncryptedProtocolMessageInterface, JsonS
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 

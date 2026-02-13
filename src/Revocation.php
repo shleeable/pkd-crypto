@@ -52,8 +52,10 @@ class Revocation
         $decoded = Base64UrlSafe::decodeNoPadding($token);
         $len = strlen($decoded);
         // 8 + 49 + 32 + 64
-        if ($len < 153) {
-            throw new CryptoException('Token is too short');
+        if ($len !== 153) {
+            throw new CryptoException(
+                $len < 153 ? 'Token is too short' : 'Token is too long'
+            );
         }
         $header = substr($decoded, 0, 8);
         if (!hash_equals($header, self::REVOKE_VERSION)) {

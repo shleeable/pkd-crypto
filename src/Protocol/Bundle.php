@@ -75,10 +75,16 @@ class Bundle
                 'message',
                 'recent-merkle-root',
             );
+            if (!is_array($data['symmetric-keys'])) {
+                throw new BundleException('symmetric-keys must be an array');
+            }
             $symmetricKeys = new AttributeKeyMap();
             foreach ($data['symmetric-keys'] as $attribute => $key) {
+                if (!is_string($key)) {
+                    throw new BundleException('Each symmetric-key must be a string');
+                }
                 $symmetricKeys->addKey(
-                    $attribute,
+                    (string) $attribute,
                     new SymmetricKey(
                         Base64UrlSafe::decodeNoPadding($key)
                     )
@@ -141,6 +147,7 @@ class Bundle
                 );
             }
         }
+        ksort($symmetricKeys);
 
         $data = [
             '!pkd-context' => $this->pkdContext,
@@ -154,6 +161,7 @@ class Bundle
         if ($this->otp !== null) {
             $data['otp'] = $this->otp;
         }
+        ksort($data);
 
         $encoded = json_encode($data, $flags);
         if (!is_string($encoded)) {

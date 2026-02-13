@@ -28,6 +28,7 @@ class EncryptedAddAuxData implements EncryptedProtocolMessageInterface, JsonSeri
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 

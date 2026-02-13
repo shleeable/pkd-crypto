@@ -30,6 +30,7 @@ class EncryptedMoveIdentity implements EncryptedProtocolMessageInterface, JsonSe
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 

@@ -31,6 +31,7 @@ class EncryptedAddKey implements EncryptedProtocolMessageInterface, JsonSerializ
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 

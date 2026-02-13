@@ -28,6 +28,7 @@ class EncryptedBurnDown implements EncryptedProtocolMessageInterface, JsonSerial
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 

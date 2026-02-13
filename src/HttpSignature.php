@@ -77,7 +77,7 @@ final class HttpSignature
     }
 
     /**
-     * Verify an HTTP Signal message, returning false if the signature is not valid.
+     * Verify an HTTP Signed message, returning false if the signature is not valid.
      *
      * @throws NotImplementedException
      * @throws HttpSignatureException
@@ -91,7 +91,7 @@ final class HttpSignature
     }
 
     /**
-     * Verify an HTTP Signal message, throwing an HttpSignatureException if there is no valid signature.
+     * Verify an HTTP Signed message, throwing an HttpSignatureException if there is no valid signature.
      * @api
      *
      * @throws HttpSignatureException
@@ -106,7 +106,7 @@ final class HttpSignature
     }
 
     /**
-     * Internal function for the two public verify methods.
+     * Internal function for the two public verify methods to verify an HTTP Signed message.
      *
      * @throws HttpSignatureException
      * @throws NotImplementedException

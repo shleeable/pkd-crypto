@@ -31,6 +31,7 @@ class EncryptedRevokeKey implements EncryptedProtocolMessageInterface, JsonSeria
 
     public function __construct(array $encrypted)
     {
+        ksort($encrypted);
         $this->encrypted = $encrypted;
     }
 
