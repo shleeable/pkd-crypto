@@ -174,7 +174,7 @@ class RevocationTest extends TestCase
                 $revocation->decode($truncated);
                 $this->fail('Truncated token should be rejected');
             } catch (CryptoException $e) {
-                $this->assertStringContainsString('too short', $e->getMessage());
+                $this->assertStringContainsString('must be exactly 153 bytes', $e->getMessage());
             } catch (\Throwable $e) {
                 // Base64 decode may throw on invalid input
                 $this->assertTrue(true);

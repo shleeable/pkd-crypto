@@ -103,7 +103,9 @@ class Bundle
             $data['action'],
             $data['message'],
             $data['recent-merkle-root'],
-            Base64UrlSafe::decodeNoPadding($data['signature']),
+            isset($data['signature'])
+                ? Base64UrlSafe::decodeNoPadding($data['signature'])
+                : '',
             $symmetricKeys,
             otp: $otp,
         );

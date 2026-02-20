@@ -1504,7 +1504,7 @@ class HttpSignatureTest extends TestCase
 
         // Manually compute expected signature base
         $expectedSignatureBase = implode("\n", [
-            '"@method": post',
+            '"@method": POST',
             '"@path": /inbox',
             '"host": example.com',
             '"@signature-params": ("@method" "@path" "host");alg="ed25519";keyid="key1";created=1700000000'
@@ -1544,7 +1544,7 @@ class HttpSignatureTest extends TestCase
         $signed = $httpSignature->sign($sk, $request, ['@method', '@path'], 'test-key', $created);
 
         $expectedSignatureBase = implode("\n", [
-            '"@method": get',
+            '"@method": GET',
             '"@path": /api/v1/resource',
             '"@signature-params": ("@method" "@path");alg="ed25519";keyid="test-key";created=1700000001'
         ]);

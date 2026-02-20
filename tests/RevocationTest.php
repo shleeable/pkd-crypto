@@ -10,6 +10,7 @@ use FediE2EE\PKD\Crypto\{
     Revocation,
     SecretKey
 };
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SodiumException;
@@ -39,5 +40,27 @@ class RevocationTest extends TestCase
 
         $this->expectException(CryptoException::class);
         $revocation->verifyRevocationToken($token2, $pk);
+    }
+
+    /**
+     * @throws CryptoException
+     */
+    public function testInvalidLength(): void
+    {
+        $revocation = new Revocation();
+        $this->expectException(CryptoException::class);
+        $this->expectExceptionMessage('Token must be exactly 153 bytes');
+        $revocation->decode(Base64UrlSafe::encodeUnpadded(str_repeat('a', 152)));
+    }
+
+    /**
+     * @throws CryptoException
+     */
+    public function testInvalidLengthLong(): void
+    {
+        $revocation = new Revocation();
+        $this->expectException(CryptoException::class);
+        $this->expectExceptionMessage('Token must be exactly 153 bytes');
+        $revocation->decode(Base64UrlSafe::encodeUnpadded(str_repeat('a', 154)));
     }
 }
