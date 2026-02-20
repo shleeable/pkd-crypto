@@ -469,4 +469,21 @@ class BundleTest extends TestCase
         $this->expectException(InputException::class);
         Bundle::fromJson($json, $keyMap);
     }
+
+    public function testFromJsonMissingSignature(): void
+    {
+        $json = json_encode([
+            'action' => 'AddKey',
+            'message' => [
+                'actor' => 'https://example.com/actor',
+                'public-key' => 'ed25519:abc',
+                'time' => '2023-01-01T00:00:00Z'
+            ],
+            'recent-merkle-root' => '',
+            'symmetric-keys' => []
+        ]);
+        $bundle = Bundle::fromJson($json);
+        $this->assertEquals('AddKey', $bundle->getAction());
+        $this->assertEquals('', $bundle->getSignature());
+    }
 }

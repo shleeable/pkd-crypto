@@ -214,7 +214,7 @@ class RevocationTamperingTest extends TestCase
         $truncatedToken = Base64UrlSafe::encodeUnpadded($truncated);
 
         $this->expectException(CryptoException::class);
-        $this->expectExceptionMessage('Token is too short');
+        $this->expectExceptionMessage('Token must be exactly 153 bytes');
         $revocation->decode($truncatedToken);
     }
 }

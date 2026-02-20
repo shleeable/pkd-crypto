@@ -208,7 +208,7 @@ final class HttpSignature
             $header = strtolower($header);
             if ($header === '@method') {
                 if ($message instanceof RequestInterface) {
-                    $lines[] = "\"@method\": " . strtolower($message->getMethod());
+                    $lines[] = "\"@method\": " . strtoupper($message->getMethod());
                 }
                 continue;
             }
@@ -229,7 +229,8 @@ final class HttpSignature
 
     private function getSignatureParamsForBase(string $signatureInput): string
     {
-        preg_match('/^[^=]+=(.*)$/', $signatureInput, $matches);
+        $label = preg_quote($this->label, '/');
+        preg_match('/(?:^|,| )' . $label . '=((?:[^,"]|"[^"]*")*)/', $signatureInput, $matches);
         return $matches[1] ?? '';
     }
 
@@ -263,12 +264,13 @@ final class HttpSignature
      */
     private function parseSignatureInput(string $header): array
     {
-        if (!preg_match('/^([^=]+)=\(([^)]+)\)(.*)$/', $header, $matches)) {
+        $label = preg_quote($this->label, '/');
+        if (!preg_match('/(?:^|,| )' . $label . '=\(([^)]+)\)((?:[^,"]|"[^"]*")*)/', $header, $matches)) {
             throw new HttpSignatureException('Invalid signature header');
         }
 
-        $coveredComponentsStr = $matches[2];
-        $paramsStr = $matches[3];
+        $coveredComponentsStr = $matches[1];
+        $paramsStr = $matches[2];
 
         $coveredComponents = [];
         $matched = preg_match_all(
